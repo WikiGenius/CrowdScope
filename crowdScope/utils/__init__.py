@@ -5,6 +5,7 @@
 from utils.draw_boxes import draw_boxes
 from utils.preprocess import preprocess, resize 
 from utils.render import create_rounded_img
+from utils.style_app import StyleApp
 import random
 random.seed(0)
 #Name of the classes according to class indices.
