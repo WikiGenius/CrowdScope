@@ -1,0 +1,207 @@
+# Author: Muhammed Elyamani
+# Date: 03/02/2023
+# GitHub: https://github.com/WikiGenius
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+#:set light_red_color get_color_from_hex("#F63D54")
+#:set light_blue_color get_color_from_hex("#027FFF")
+#:set light_Purple_color  get_color_from_hex("#8876FE")
+#:set dark_Blue_color   get_color_from_hex("#0D1386")
+#:set dark_Purple_color get_color_from_hex("#3C44C3")
+#:set white_color get_color_from_hex("#ffffff")
+#:set black_color get_color_from_hex("#000000")
+
+<DrawerClickableItem@MDNavigationDrawerItem>
+    focus_color: light_Purple_color
+    text_color: white_color
+    icon_color: white_color
+    selected_color: white_color
+
+<HintBoxContainer@MDCard>
+
+<MainScreen>:
+    detection_image: detection_image
+    search_input: search_input
+    upload_video_button: upload_video_button
+    find_object_button: find_object_button
+    slider: slider   
+    MDScreen:
+        MDNavigationLayout:
+            MDScreenManager:
+                MDScreen:
+                    MDBoxLayout:
+                        orientation: 'horizontal'
+                        size_hint_y:0.07
+                        pos_hint: {"top": 1}
+                        md_bg_color: black_color
+                        specific_text_color: white_color
+                        MDNavigationRailMenuButton:
+                            on_release: nav_drawer.set_state("open")
+                        Image:
+                            source: './data/logo.png'
+                            # size_hint: 0.2, 0.2
+                            pos_hint: {'center_x': 0.5,'center_y': 0.5}
+                    FloatLayout:
+                        MDTextField:
+                            id: search_input
+                            size_hint: 0.5, None
+                            # height: dp(48)
+                            pos_hint: {'center_x': 0.5, 'top': 0.9}
+                            hint_text: 'SEARCH ITEM'
+                            mode: "line"
+                            icon_left: "magnify"
+                            icon_left_color_normal: white_color
+                            icon_left_color_focus: white_color
+
+                            line_color_focus: light_Purple_color
+                            line_color_normal: light_Purple_color
+
+                            hint_text_color_focus: light_red_color
+
+                            # text_color_normal: light_red_color
+                            text_color_focus: light_red_color
+                    
+                        MDLabel:
+                            text: "CONFIDENCE LEVEL"
+                            size_hint: 0.5, None
+                            # height: dp(48)
+                            pos_hint: {'x': 0.1, 'top': 0.8}
+
+                        Myslider:
+                            id: slider
+                            size_hint: 0.9, None
+                            # height: dp(48)
+                            pos_hint: {'center_x': 0.5,'top': 0.75}
+                            min: 0
+                            max: 100
+                            value: 25
+                            hint: False
+                            hint_text_color: "white"
+                            # hint_radius: [6, 0, 6, 0]
+                            thumb_color_active: dark_Purple_color
+                            thumb_color_inactive: dark_Purple_color
+                            # thumb_color_disabled: light_Purple_color
+                            track_color_active: light_Purple_color
+                            track_color_inactive: light_Purple_color
+                            show_off:True
+                            active:True
+                            color: light_Purple_color
+                        Image:
+                            id: detection_image
+                            source: './data/upload.png'
+                            opacity: 0.1
+                            # allow_stretch: True
+                            keep_ratio: True
+                            # size_hint_y: 0.6
+                            # size_hint: 0.8, 0.6
+                            size_hint_x: 0.9
+                            pos_hint: {'center_x': 0.5, 'center_y': 0.42}
+                        MDFillRoundFlatButton:
+                            id: find_object_button
+                            size_hint: 0.07, None
+                            height: dp(48)
+                            # pos_hint: {'right': 0.95, 'top': 0.95}
+                            pos_hint: {'center_x': 0.5,'y': 0.1}
+                            text: 'ANALYZE'
+                            on_release: app.find_object()
+                            md_bg_color: light_Purple_color
+
+
+            MDNavigationDrawer:
+                id: nav_drawer
+                radius: (0, 16, 16, 0)
+                # md_bg_color: rail_bg_color
+                # elevation: 4
+                # shadow_radius: 16, 16, 0, 0
+                width: "240dp"
+                enable_swiping:False
+                anchor: "left"
+                MDNavigationDrawerMenu:
+
+                    MDNavigationDrawerHeader:
+                        # title: "Header title"
+                        # title_color: "#4a4939"
+                        text: "Settings"
+                        spacing: "4dp"
+                        padding: "12dp", 0, 0, "56dp"
+                    DrawerClickableItem:
+                        id: upload_video_button
+                        text: "Upload"
+                        icon: "upload"
+                        on_release: app.upload_video()
+                    MDNavigationDrawerDivider:
+
+                    # MDNavigationDrawerLabel:
+                    #     text: "CONFIDENCE LEVEL"
+
+                    # OneLineIconListItem:
+                    #     Myslider:
+                    #         id: slider
+                    #         min: 0
+                    #         max: 100
+                    #         value: 25
+                    #         hint: False
+                    #         hint_text_color: "white"
+                    #         # hint_radius: [6, 0, 6, 0]
+                    #         thumb_color_active: dark_Purple_color
+                    #         thumb_color_inactive: dark_Purple_color
+                    #         # thumb_color_disabled: light_Purple_color
+                    #         track_color_active: light_Purple_color
+                    #         track_color_inactive: light_Purple_color
+                    #         show_off:True
+                    #         active:True
+                    #         color: light_Purple_color
+
+<LoadFile>:
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+        FileChooserListView:
+            path: './assets/videos'
+            filters:['*.mp4', '*.avi', '*.3gp', '*.mkv']
+            id: filechooser
+        BoxLayout:
+            size_hint_y: 0.1
+            # height: 30
+            Button:
+                text: "Cancel"
+                on_release: root.cancel()
+                font_size:30
+            Button:
+                text: "Load"
+                on_release: app.load(filechooser.path, filechooser.selection[0]) if len(filechooser.selection) > 0 else None
+                font_size:30
+<Myslider>
+    HintBoxContainer:
+        id: hint_box_update
+        size_hint: None, None
+        md_bg_color: root.hint_bg_color if root.hint_bg_color else [0, 0, 0, 0]
+        # elevation: 1.5
+        opacity: 1 if root.active else 0
+        # radius: root.hint_radius
+        padding: "6dp", "6dp", "6dp", "8dp"
+        # shadow_color:
+        #     ([0, 0, 0, 0.6] if root.hint_bg_color else [0, 0, 0, 0]) \
+        #     if root.active else \
+        #     [0, 0, 0, 0]
+        size:
+            lbl_value.width + self.padding[0] * 2, \
+            lbl_value.height + self.padding[0]
+        pos:
+            (root.value_pos[0] - dp(9), root.center_y - hint_box_update.height / 2 - dp(30)) \
+            if root.orientation == "horizontal" else \
+            (root.center_x - hint_box_update.width / 2 + dp(30), root.value_pos[1] - dp(8))
+        MDLabel:
+            id: lbl_value
+            font_style: "Caption"
+            halign: "center"
+            theme_text_color: "Custom"
+            -text_size: None, None
+            adaptive_size: True
+            pos_hint: {"center_x": .5, "center_y": .5}
+            text_color:
+                app.theme_cls.primary_color \
+                if not root.hint_text_color else root.hint_text_color
+            text:
+                str(root.value) \
+                if isinstance(root.step, float) else str(int(root.value)) + "%"

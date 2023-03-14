@@ -1,0 +1,8 @@
+__pycache__
+bin
+tests
+.buildozer
+.vscode
+.venv
+poetry.lock
+designs
