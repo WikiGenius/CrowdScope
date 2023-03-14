@@ -6,3 +6,4 @@ tests
 .venv
 poetry.lock
 designs
+assets
