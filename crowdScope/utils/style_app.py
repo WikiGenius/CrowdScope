@@ -20,7 +20,8 @@ class StyleApp(MDApp):
     
     def analyse_image(self, frame):
         return frame
-    
+    def process_after_video(self):
+        pass
     def update(self, *args):
         # Read a frame from the video capture device
         ret, frame = self.capture.read()
@@ -28,6 +29,7 @@ class StyleApp(MDApp):
         if not ret:
             # self.screen.detection_image.source = './data/upload.png'
             self.screen.detection_image.opacity = 0.1
+            self.process_after_video()
             return
         frame = resize(frame, height=600)
     

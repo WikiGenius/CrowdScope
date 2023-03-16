@@ -19,7 +19,12 @@
 <MainScreen>:
     detection_image: detection_image
     upload_video_button: upload_video_button
+    people_count:people_count
     analyse_button: analyse_button
+    gender_M:gender_M
+    gender_F:gender_F
+    avg_age:avg_age
+    
     MDScreen:
         MDNavigationLayout:
             MDScreenManager:
@@ -67,9 +72,10 @@
                                 pos_hint: {'center_y': 0.5, 'x': 0.1}
                                 size_hint_x: 0.15
                                 MDLabel:
+                                    id:people_count
                                     markup:True
                                     theme_text_color: "Custom"
-                                    text: "[font=Montserrat]21[/font]"
+                                    text: "[font=Montserrat]0[/font]"
                                     halign: 'center'
                                     md_bg_color: white_color
                                     text_color: black_color
@@ -88,6 +94,7 @@
                                 pos_hint: {'center_y': 0.5, 'center_x': 0.5}
                                 size_hint_x: 0.15
                                 MDLabel:
+                                    id:avg_age
                                     markup:True
                                     theme_text_color: "Custom"
                                     text: "[font=Montserrat]25[/font]"
@@ -109,6 +116,7 @@
                                 pos_hint: {'center_y': 0.72, 'right': 0.95}
                                 size_hint: 0.25, 0.5
                                 MDLabel:
+                                    id: gender_M
                                     markup:True
                                     theme_text_color: "Custom"
                                     text: "[font=Montserrat]M[/font]"
@@ -118,6 +126,7 @@
                                     font_style:"H2"
                                     size_hint_x:0.5
                                 MDLabel:
+                                    id: gender_F
                                     markup:True
                                     theme_text_color: "Custom"
                                     text: "[font=Montserrat]F[/font]"
