@@ -37,26 +37,97 @@
                             # size_hint: 0.2, 0.2
                             pos_hint: {'center_x': 0.5,'center_y': 0.5}
                     FloatLayout:
-
                         Image:
                             id: detection_image
                             source: './data/upload.png'
                             opacity: 0.1
                             # allow_stretch: True
                             keep_ratio: True
-                            # size_hint_y: 0.6
+                            size_hint_y: 0.6
                             # size_hint: 0.8, 0.6
-                            size_hint_x: 0.9
-                            pos_hint: {'center_x': 0.5, 'center_y': 0.42}
+                            # size_hint_x: 0.9
+                            pos_hint: {'center_x': 0.5, 'top': 0.92}
                         MDFillRoundFlatButton:
                             id: analyse_button
+                                
+                            markup:True
                             size_hint: 0.07, None
                             height: dp(48)
                             # pos_hint: {'right': 0.95, 'top': 0.95}
-                            pos_hint: {'center_x': 0.5,'y': 0.1}
-                            text: 'ANALYZE'
+                            pos_hint: {'center_x': 0.5,'top': 0.3}
+                            text: '[font=Montserrat]ANALYZE[/font]'
+                            font_size: dp(20)
                             on_release: app.analyse_button()
                             md_bg_color: light_Purple_color
+                        FloatLayout:
+                            pos_hint: {'bottom': 1}
+                            size_hint: 1, 0.18
+                            MDBoxLayout:
+                                orientation: 'vertical'
+                                pos_hint: {'center_y': 0.5, 'x': 0.1}
+                                size_hint_x: 0.15
+                                MDLabel:
+                                    markup:True
+                                    theme_text_color: "Custom"
+                                    text: "[font=Montserrat]21[/font]"
+                                    halign: 'center'
+                                    md_bg_color: white_color
+                                    text_color: black_color
+                                    font_style:"H2"
+
+                                MDLabel:
+                                    markup:True
+                                    theme_text_color: "Custom"
+                                    text: "[font=Montserrat]People[/font]"
+                                    halign: 'center'
+                                    text_color: white_color
+                                    font_style:"H5"
+
+                            MDBoxLayout:
+                                orientation: 'vertical'
+                                pos_hint: {'center_y': 0.5, 'center_x': 0.5}
+                                size_hint_x: 0.15
+                                MDLabel:
+                                    markup:True
+                                    theme_text_color: "Custom"
+                                    text: "[font=Montserrat]25[/font]"
+                                    halign: 'center'
+                                    md_bg_color: white_color
+                                    text_color: black_color
+                                    font_style:"H2"
+
+                                MDLabel:
+                                    markup:True
+                                    theme_text_color: "Custom"
+                                    text: "[font=Montserrat]Avg Age[/font]"
+                                    halign: 'center'
+                                    text_color: white_color
+                                    font_style:"H5"
+
+                            MDBoxLayout:
+                                orientation: 'horizontal'
+                                pos_hint: {'center_y': 0.72, 'right': 0.95}
+                                size_hint: 0.25, 0.5
+                                MDLabel:
+                                    markup:True
+                                    theme_text_color: "Custom"
+                                    text: "[font=Montserrat]M[/font]"
+                                    halign: 'center'
+                                    md_bg_color: light_Purple_color
+                                    text_color: white_color
+                                    font_style:"H2"
+                                    size_hint_x:0.5
+                                MDLabel:
+                                    markup:True
+                                    theme_text_color: "Custom"
+                                    text: "[font=Montserrat]F[/font]"
+                                    halign: 'center'
+                                    md_bg_color: white_color
+                                    text_color: black_color
+                                    font_style:"H2"
+                                    size_hint_x:0.5
+
+
 
 
             MDNavigationDrawer:
@@ -68,17 +139,20 @@
                 width: "240dp"
                 enable_swiping:False
                 anchor: "left"
+
                 MDNavigationDrawerMenu:
 
                     MDNavigationDrawerHeader:
                         # title: "Header title"
                         # title_color: "#4a4939"
                         text: "Settings"
+
                         spacing: "4dp"
                         padding: "12dp", 0, 0, "56dp"
                     DrawerClickableItem:
                         id: upload_video_button
-                        text: "Upload"
+                        markup:True
+                        text: "[font=Montserrat]Upload[/font]"
                         icon: "upload"
                         on_release: app.upload_video()
                     MDNavigationDrawerDivider:

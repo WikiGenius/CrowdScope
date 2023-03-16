@@ -8,7 +8,7 @@ class StyleApp(MDApp):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.theme_cls.theme_style = "Dark"
-        self.started = False
+        self.start = False
         self.fps = 33
         self.frame_count = 0
         
@@ -32,7 +32,8 @@ class StyleApp(MDApp):
         frame = resize(frame, height=600)
     
         # Perform object detection on the frame using the YOLOv8n model
-        frame = self.analyse_image(frame)
+        if self.start:
+            frame = self.analyse_image(frame)
         frame = create_rounded_img(frame, border_radius=40)
         
         cv2.line(frame, (20, 25), (127, 25), [85, 45, 255], 30)

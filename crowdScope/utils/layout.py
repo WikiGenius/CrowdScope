@@ -13,7 +13,14 @@ from kivy.graphics.texture import Texture
 from utils import resize, create_rounded_img
 from plyer import filechooser
 
-model_path = ''
+model_path = 'assets/weights/best.pt'
+
+# importing labelbase which
+# register our custom font for application
+from kivy.core.text import LabelBase
+# registering our new custom fontstyle
+LabelBase.register(name='Montserrat',
+                   fn_regular='assets/fonts/Montserrat/static/Montserrat-Black.ttf')
 
 # Define a custom widget for loading files
 class LoadFile(FloatLayout):
