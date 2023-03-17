@@ -22,11 +22,11 @@ from kivy.core.text import LabelBase
 LabelBase.register(name='Montserrat',
                    fn_regular='assets/fonts/Montserrat/static/Montserrat-Black.ttf')
 
-# Define a custom widget for loading files
-class LoadFile(FloatLayout):
-    load = ObjectProperty(None)
-    cancel = ObjectProperty(None)
-        
+
+class Myslider(MDSlider):
+    def on_touch_up(self, touch):
+        self.active = True
+
 # Define the main widget for the app
 class MainScreen(Screen):
     pass       
