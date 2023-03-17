@@ -51,7 +51,6 @@ class crowdScope(StyleApp):
             modified_people_count_number = self.pattern1.sub(f"{count_people}", people_count_number)
             self.screen.people_count.text = modified_people_count_number
             
-            print(count_people)
         return frame
     
     def process_after_video(self):
