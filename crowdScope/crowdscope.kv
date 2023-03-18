@@ -54,7 +54,6 @@
                             pos_hint: {'center_x': 0.5, 'top': 0.92}
                         MDFillRoundFlatButton:
                             id: analyse_button
-                                
                             markup:True
                             size_hint: 0.07, None
                             height: dp(48)
@@ -71,15 +70,20 @@
                                 orientation: 'vertical'
                                 pos_hint: {'center_y': 0.5, 'x': 0.1}
                                 size_hint_x: 0.15
-                                MDLabel:
+                                Label:
                                     id:people_count
                                     markup:True
-                                    theme_text_color: "Custom"
                                     text: "[font=Montserrat]0[/font]"
                                     halign: 'center'
-                                    md_bg_color: white_color
-                                    text_color: black_color
-                                    font_style:"H2"
+                                    color: black_color
+                                    font_size:45
+                                    canvas.before:
+                                        Color:
+                                            rgba: white_color
+                                        RoundedRectangle:
+                                            radius: self.width / 6,
+                                            pos: self.pos
+                                            size: self.size
 
                                 MDLabel:
                                     markup:True
@@ -93,15 +97,21 @@
                                 orientation: 'vertical'
                                 pos_hint: {'center_y': 0.5, 'center_x': 0.5}
                                 size_hint_x: 0.15
-                                MDLabel:
+                                Label:
                                     id:avg_age
                                     markup:True
                                     theme_text_color: "Custom"
                                     text: "[font=Montserrat]25[/font]"
                                     halign: 'center'
-                                    md_bg_color: white_color
-                                    text_color: black_color
-                                    font_style:"H2"
+                                    color: black_color
+                                    font_size:45
+                                    canvas.before:
+                                        Color:
+                                            rgba: white_color
+                                        RoundedRectangle:
+                                            radius: self.width / 6,
+                                            pos: self.pos
+                                            size: self.size
 
                                 MDLabel:
                                     markup:True
@@ -125,6 +135,7 @@
                                     text_color: white_color
                                     font_style:"H2"
                                     size_hint_x:0.5
+                                    
                                 MDLabel:
                                     id: gender_F
                                     markup:True
@@ -224,3 +235,19 @@
             text:
                 str(root.value) \
                 if isinstance(root.step, float) else str(int(root.value)) + "%"
+
+
+# MDLabel:
+    # id:people_count
+    # markup:True
+    # theme_text_color: "Custom"
+    # text: "[font=Montserrat]0[/font]"
+    # halign: 'center'
+    # md_bg_color: white_color
+    # text_color: black_color
+    # font_style:"H2"
+    # canvas:
+        # RoundedRectangle:
+            # pos: self.pos
+            # size: self.size
+            # radius: [20, 20, 20, 20]
