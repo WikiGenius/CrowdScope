@@ -58,14 +58,14 @@
                             size_hint: 0.07, None
                             height: dp(48)
                             # pos_hint: {'right': 0.95, 'top': 0.95}
-                            pos_hint: {'center_x': 0.5,'top': 0.3}
+                            pos_hint: {'center_x': 0.5,'top': 0.35}
                             text: '[font=Montserrat]ANALYZE[/font]'
                             font_size: dp(20)
                             on_release: app.analyse_button()
                             md_bg_color: light_Purple_color
                         FloatLayout:
                             pos_hint: {'bottom': 1}
-                            size_hint: 1, 0.18
+                            size_hint: 1, 0.24
                             MDBoxLayout:
                                 orientation: 'vertical'
                                 pos_hint: {'center_y': 0.5, 'x': 0.1}
@@ -126,6 +126,24 @@
                                 pos_hint: {'center_y': 0.72, 'right': 0.95}
                                 size_hint: 0.25, 0.6
                                 Label:
+                                    id: gender_F
+                                    markup:True
+                                    theme_text_color: "Custom"
+                                    text: "[font=Montserrat]F[/font]"
+                                    halign: 'center'
+                                    size_hint_x:0.5
+                                    color: black_color
+                                    font_size:45
+                                    pos: (650, self.y)
+                                    # pos_hint: {'right': 0.95, 'center_y': 0.68}
+                                    canvas.before:
+                                        Color:
+                                            rgba: white_color
+                                        RoundedRectangle:
+                                            radius: [0,self.width / 6,  self.width / 6, 0 ]
+                                            pos: self.pos
+                                            size: self.size
+                                Label:
                                     id: gender_M
                                     markup:True
                                     theme_text_color: "Custom"
@@ -135,30 +153,21 @@
                                     size_hint_x:0.5
                                     color: white_color
                                     font_size:45
+                                    # pos: (self.x + self.width/2, self.y)
+                                    pos: (565, self.y)
+                                    # pos_hint: {'left': 0.7,'center_y': 0.68}
+
+                                    on_pos: 
+                                        print("x: ",self.x)
+                                        print("self.width: ",self.width)
                                     canvas.before:
                                         Color:
                                             rgba: light_Purple_color
                                         RoundedRectangle:
-                                            radius: [self.width / 6,0,  0, self.width / 6 ]
+                                            # radius: [self.width / 6,0,  0, self.width / 6 ]
+                                            radius: self.width / 6,
                                             pos: self.pos
                                             size: self.size
-                                Label:
-                                    id: gender_F
-                                    markup:True
-                                    theme_text_color: "Custom"
-                                    text: "[font=Montserrat]F[/font]"
-                                    halign: 'center'
-                                    size_hint_x:0.5
-                                    color: black_color
-                                    font_size:45
-                                    canvas.before:
-                                        Color:
-                                            rgba: white_color
-                                        RoundedRectangle:
-                                            radius: [0,self.width / 6,  self.width / 6, 0 ]
-                                            pos: self.pos
-                                            size: self.size
-
 
 
 
