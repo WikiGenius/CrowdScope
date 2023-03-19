@@ -1,5 +1,9 @@
-import os
+# Author: Muhammed Elyamani
+# Date: 03/02/2023
+# GitHub: https://github.com/WikiGenius
+
 from utils.layout import *
+from conf import *
 from utils import StyleApp
 import asone
 from asone import ASOne
@@ -13,13 +17,7 @@ import time
 # People_count:People_count
 
 class crowdScope(StyleApp):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        # self.imgsz = 640
-        self.imgsz = int(model_path.split('.')[0].split('_')[-1])
-        self.visualize = True
-        self.iou_thres=0.45
-        
+
     def on_start(self): 
         # Load YOLOv8n model for object detection
         print(f"load model: {model_path}")

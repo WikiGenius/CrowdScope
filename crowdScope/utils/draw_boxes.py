@@ -1,3 +1,7 @@
+# Author: Muhammed Elyamani
+# Date: 03/02/2023
+# GitHub: https://github.com/WikiGenius
+
 from asone.utils.draw import *
 def count_people(img, dets, visualize = True, identities=None, draw_trails=False, offset=(0, 0), class_names=['face', 'person']):
     count_people = 0
