@@ -19,6 +19,7 @@ class crowdScope(StyleApp):
         self.imgsz = int(model_path.split('.')[0].split('_')[-1])
         self.visualize = True
         self.iou_thres=0.45
+        
     def on_start(self): 
         # Load YOLOv8n model for object detection
         print(f"load model: {model_path}")
@@ -37,7 +38,7 @@ class crowdScope(StyleApp):
     def analyse_image(self, frame):
         process_time = time.time()
         frame, faceBoxes = self.count_people(frame)
-        frame = self.analyse_faces(frame, faceBoxes)
+        # frame = self.analyse_faces(frame, faceBoxes)
         process_time = time.time() - process_time
         self.fps = 1 / process_time
         return frame
@@ -66,6 +67,8 @@ class crowdScope(StyleApp):
         return frame, faceBoxes
     
     def analyse_faces(self, frame, faceBoxes):
+        total_ages = 0
+        total_genderList = []
         for faceBox in faceBoxes:
             face=frame[max(0,faceBox[1]-padding):
                        min(faceBox[3]+padding,frame.shape[0]-1),max(0,faceBox[0]-padding)
@@ -76,17 +79,25 @@ class crowdScope(StyleApp):
             self.genderNet.setInput(blob)
             genderPreds=self.genderNet.forward()
             gender=genderList[genderPreds[0].argmax()]
+            total_genderList.append(gender)
 
             self.ageNet.setInput(blob)
             agePreds=self.ageNet.forward()
             age=ageList[agePreds[0].argmax()]
-
+            ag1, age2 = age.strip('()').split('-')
+            total_ages += (int(ag1) + int(age2)) / 2
             cv2.putText(frame, f'{gender}, {age}', (faceBox[0], faceBox[1]-10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,255), 2, cv2.LINE_AA)
         
-        
+        avg_age = int(total_ages / faceBoxes.shape[0])
+        M_count = sum([1 for x in total_genderList if x=='Male' ])
+        F_count = len(total_genderList) - M_count
+        M_ratio = M_count /  len(total_genderList)
+        F_ratio = F_count /  len(total_genderList)
+        print(f"M_ratio: {M_ratio}")
+        print(f"F_ratio: {F_ratio}")
         
         avg_age_number = self.screen.avg_age.text
-        modified_avg_age_number = self.pattern1.sub(f"{faceBoxes.shape[0]}", avg_age_number)
+        modified_avg_age_number = self.pattern1.sub(f"{avg_age}", avg_age_number)
         self.screen.avg_age.text = modified_avg_age_number
         
         return frame
@@ -105,7 +116,7 @@ class crowdScope(StyleApp):
         self.screen.avg_age.text = modified_avg_age_number
         "=======================FPS=========================="
         self.fps = 33
-        
+    
 
 if __name__ == '__main__':
     crowdScope().run()
