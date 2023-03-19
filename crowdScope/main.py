@@ -11,10 +11,6 @@ import utils
 import re
 import time
 
-# gender_M:gender_M
-# gender_F:gender_F
-# avg_age:avg_age
-# People_count:People_count
 
 class crowdScope(StyleApp):
 
@@ -88,7 +84,7 @@ class crowdScope(StyleApp):
             if visualize:
                 cv2.putText(frame_vis, f'{gender}, {age}', (faceBox[0], faceBox[1]-10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,255), 2, cv2.LINE_AA)
         
-        if faceBox.shape[0] > 0:
+        if faceBoxes.shape[0] > 0:
             avg_age = int(total_ages / faceBoxes.shape[0])
             M_count = sum([1 for x in total_genderList if x=='Male' ])
             F_count = len(total_genderList) - M_count
@@ -98,7 +94,7 @@ class crowdScope(StyleApp):
         else:
             M_ratio = 0.5
             F_ratio = 0.5
-            avg_age_number= 0
+            avg_age= 0
         if M_ratio < 0.3:
             self.screen.gender_M.text = ""
         else:

@@ -40,25 +40,20 @@
                             on_release: nav_drawer.set_state("open")
                         Image:
                             source: './data/logo.png'
-                            # size_hint: 0.2, 0.2
                             pos_hint: {'center_x': 0.5,'center_y': 0.5}
                     FloatLayout:
                         Image:
                             id: detection_image
                             source: './data/upload.png'
                             opacity: 0.1
-                            # allow_stretch: True
                             keep_ratio: True
                             size_hint_y: 0.6
-                            # size_hint: 0.8, 0.6
-                            # size_hint_x: 0.9
                             pos_hint: {'center_x': 0.5, 'top': 0.92}
                         MDFillRoundFlatButton:
                             id: analyse_button
                             markup:True
                             size_hint: 0.07, None
                             height: dp(48)
-                            # pos_hint: {'right': 0.95, 'top': 0.95}
                             pos_hint: {'center_x': 0.5,'top': 0.35}
                             text: '[font=Montserrat]ANALYZE[/font]'
                             font_size: dp(20)
@@ -76,7 +71,6 @@
                                     text: "[font=Montserrat]0[/font]"
                                     halign: 'center'
                                     color: black_color
-                                    # font_size:45
                                     font_size:self.height * 0.8
                                     canvas.before:
                                         Color:
@@ -135,15 +129,11 @@
                                     size_hint_x:0.5
                                     color: black_color
                                     font_size:self.height * 0.8
-                                    # pos: (650, self.y)
                                     pos_hint: {'center_y': 0.5, 'right': 1}
-
-                                    # pos_hint: {'right': 0.95, 'center_y': 0.68}
                                     canvas.before:
                                         Color:
                                             rgba: white_color
                                         RoundedRectangle:
-                                            # radius: [0,self.width / 6,  self.width / 6, 0 ]
                                             radius: self.width / 6, 
                                             pos: self.pos
                                             size: self.size
@@ -157,22 +147,14 @@
                                     size_hint_x:0.5
                                     color: white_color
                                     font_size:self.height * 0.8
-                                    # pos: (self.x + self.width/2, self.y)
-                                    # pos: (565, self.y)
                                     pos_hint: {'center_y': 0.5, 'x': 0.1}
-
-                                    # pos_hint: {'x': 0.7,'center_y': 0.68}
-
                                     canvas.before:
                                         Color:
                                             rgba: light_Purple_color
                                         RoundedRectangle:
-                                            # radius: [self.width / 6,0,  0, self.width / 6 ]
                                             radius: self.width / 6,
                                             pos: self.pos
                                             size: self.size
-
-
 
             MDNavigationDrawer:
                 id: nav_drawer
@@ -215,25 +197,7 @@
                             show_off:True
                             active:True
                             color: light_Purple_color
-                    # MDNavigationDrawerDivider:
-                    # OneLineIconListItem:
-                    #     Myslider:
-                    #         id: slider2
-                    #         min: 0
-                    #         max: 100
-                    #         value: 25
-                    #         hint: False
-                    #         hint_text_color: "white"
-                    #         # hint_radius: [6, 0, 6, 0]
-                    #         thumb_color_active: dark_Purple_color
-                    #         thumb_color_inactive: dark_Purple_color
-                    #         # thumb_color_disabled: light_Purple_color
-                    #         track_color_active: light_Purple_color
-                    #         track_color_inactive: light_Purple_color
-                    #         show_off:True
-                    #         active:True
-                    #         color: light_Purple_color
-                    # MDNavigationDrawerDivider:
+
 
                         
 <Myslider>
@@ -256,9 +220,9 @@
             (root.value_pos[0] - dp(9), root.center_y - hint_box_update.height / 2 - dp(30)) \
             if root.orientation == "horizontal" else \
             (root.center_x - hint_box_update.width / 2 + dp(30), root.value_pos[1] - dp(8))
-        Label:
+        MDLabel:
             id: lbl_value
-            font_size:self.height * 0.4
+            font_style: "Caption"
             halign: "center"
             theme_text_color: "Custom"
             -text_size: None, None
@@ -270,19 +234,3 @@
             text:
                 str(root.value) \
                 if isinstance(root.step, float) else str(int(root.value)) + "%"
-
-
-# Label:
-    # id:people_count
-    # markup:True
-    # theme_text_color: "Custom"
-    # text: "[font=Montserrat]0[/font]"
-    # halign: 'center'
-    # md_bg_color: white_color
-    # text_color: black_color
-    # font_size:self.height * 0.4
-    # canvas:
-        # RoundedRectangle:
-            # pos: self.pos
-            # size: self.size
-            # radius: [20, 20, 20, 20]
