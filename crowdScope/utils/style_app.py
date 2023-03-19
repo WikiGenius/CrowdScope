@@ -71,9 +71,9 @@ class StyleApp(MDApp):
         '''
         if selection is not None:
             self.selection = selection
-        print("Uploading video...")
-        # Load the selected video file
-        self.start_app(self.selection[0])
+            print("Uploading video...")
+            # Load the selected video file
+            self.start_app(self.selection[0])
 
 
     def start_app(self, vid_path):

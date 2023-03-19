@@ -15,13 +15,14 @@ import time
 class crowdScope(StyleApp):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.imgsz = 640
+        # self.imgsz = 640
+        self.imgsz = int(model_path.split('.')[0].split('_')[-1])
         self.visualize = True
         self.iou_thres=0.45
-        
     def on_start(self): 
         # Load YOLOv8n model for object detection
-        # self.detector = ASOne(detector=asone.YOLOV8N_PYTORCH, use_cuda=True)
+        print(f"load model: {model_path}")
+        print(f"image size: {self.imgsz }")
         self.detector = ASOne(detector=asone.YOLOV8N_PYTORCH,weights=model_path ,use_cuda=True)
         self.pattern1 = re.compile(r'\d+')
         
@@ -30,8 +31,11 @@ class crowdScope(StyleApp):
         pass  
     
     def analyse_image(self, frame):
+        process_time = time.time()
         frame, faces = self.count_people(frame)
         frame = self.analyse_faces(frame, faces)
+        process_time = time.time() - process_time
+        self.fps = 1 / process_time
         return frame
     
     def analyse_button(self):
@@ -70,8 +74,12 @@ class crowdScope(StyleApp):
         people_count_number = self.screen.people_count.text
         modified_people_count_number = self.pattern1.sub(f"{0}", people_count_number)
         self.screen.people_count.text = modified_people_count_number
-        "====================================================="
-    
+        "=======================avg_age======================"
+        avg_age_number = self.screen.avg_age.text
+        modified_avg_age_number = self.pattern1.sub(f"{0}", avg_age_number)
+        self.screen.avg_age.text = modified_avg_age_number
+        "=======================FPS=========================="
+        self.fps = 33
         
 
 if __name__ == '__main__':
