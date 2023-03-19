@@ -1,7 +1,7 @@
 from asone.utils.draw import *
 def count_people(img, dets, visualize = True, identities=None, draw_trails=False, offset=(0, 0), class_names=['face', 'person']):
     count_people = 0
-    faces = []
+    faceBoxes = []
     if dets is not None: 
         bbox_xyxy = dets[:, :4]
         scores = dets[:, 4]
@@ -38,7 +38,7 @@ def count_people(img, dets, visualize = True, identities=None, draw_trails=False
                count_people += 1
                
             elif label == 'face':
-                faces.append(get_face(box, offset))
+                faceBoxes.append(get_face(box, offset))
                 
             if visualize:
                 draw_ui_box(box, img, label=label, color=color, line_thickness=2)
@@ -55,8 +55,8 @@ def count_people(img, dets, visualize = True, identities=None, draw_trails=False
                 data_deque[id].appendleft(center)    
                 drawtrails(data_deque, id, color, img)
                 
-    faces = np.array(faces)
-    return img, count_people, faces 
+    faceBoxes = np.array(faceBoxes)
+    return img, count_people, faceBoxes 
 
 
 def get_face(box, offset):
