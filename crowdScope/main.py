@@ -21,7 +21,7 @@ class crowdScope(StyleApp):
     def on_start(self): 
         # Load YOLOv8n model for object detection
         print(f"load model: {model_path}")
-        print(f"image size: {self.imgsz }")
+        print(f"image size: {imgsz }")
         self.detector = ASOne(detector=asone.YOLOV8N_PYTORCH,weights=model_path ,use_cuda=True)
 
         self.ageNet=cv2.dnn.readNet(ageModel,ageProto)
@@ -55,8 +55,8 @@ class crowdScope(StyleApp):
 
     def count_people(self, frame):
         conf_thres = self.screen.conf_thres.value / 100
-        dets, frame_info = self.detector.detect(frame, conf_thres=conf_thres, iou_thres=self.iou_thres, input_shape=self.imgsz)
-        frame, count_people, faceBoxes = utils.count_people(frame, dets, visualize=self.visualize )
+        dets, frame_info = self.detector.detect(frame, conf_thres=conf_thres, iou_thres=iou_thres, input_shape=imgsz)
+        frame, count_people, faceBoxes = utils.count_people(frame, dets, visualize=visualize )
         
         people_count_number = self.screen.people_count.text
         modified_people_count_number = self.pattern1.sub(f"{count_people}", people_count_number)
@@ -85,7 +85,7 @@ class crowdScope(StyleApp):
             ag1, age2 = age.strip('()').split('-')
             total_ages += (int(ag1) + int(age2)) / 2
             
-            if self.visualize:
+            if visualize:
                 cv2.putText(frame_vis, f'{gender}, {age}', (faceBox[0], faceBox[1]-10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,255), 2, cv2.LINE_AA)
         
         if faceBox.shape[0] > 0:
