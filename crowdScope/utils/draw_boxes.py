@@ -1,14 +1,14 @@
 from asone.utils.draw import *
-def count_people(img, bbox_xyxy, class_ids, filter_classes=['person'], visualize = True, identities=None, draw_trails=False, offset=(0, 0), class_names=None):
+def count_people(img, bbox_xyxy, class_ids, visualize = True, identities=None, draw_trails=False, offset=(0, 0), class_names=['face', 'person']):
     # cv2.line(img, line2[0], line2[1], (0,200,0), 3)
     height, width, _ = img.shape
     count_people = 0
+    faces = []
     # remove tracked point from buffer if object is lost
     if draw_trails:
         for key in list(data_deque):
             if key not in identities:
                 data_deque.pop(key)
-    
     for i, box in enumerate(bbox_xyxy):
         x1, y1, x2, y2 = [int(i) for i in box]
         x1 += offset[0]
@@ -28,11 +28,13 @@ def count_people(img, bbox_xyxy, class_ids, filter_classes=['person'], visualize
             obj_name = names[int(class_ids[i])]
         
         label = f'{obj_name}' if id is None else f'{id}'
-        if filter_classes is None:
-            filter_classes = []
-        if label not in filter_classes:
-            continue
-        count_people += 1
+
+        if label == 'person':
+           count_people += 1
+           
+        elif label == 'face':
+            faces.append(get_face(box, offset))
+            
         if visualize:
             draw_ui_box(box, img, label=label, color=color, line_thickness=2)
 
@@ -47,5 +49,15 @@ def count_people(img, bbox_xyxy, class_ids, filter_classes=['person'], visualize
         
             data_deque[id].appendleft(center)    
             drawtrails(data_deque, id, color, img)
- 
-    return img, count_people
+            
+    faces = np.array(faces)
+    return img, count_people, faces 
+
+
+def get_face(box, offset):
+    x1, y1, x2, y2 = [int(i) for i in box]
+    x1 += offset[0]
+    x2 += offset[0]
+    y1 += offset[1]
+    y2 += offset[1]
+    return [x1, y1, x2, y2]

@@ -158,9 +158,6 @@
                                     pos: (565, self.y)
                                     # pos_hint: {'left': 0.7,'center_y': 0.68}
 
-                                    on_pos: 
-                                        print("x: ",self.x)
-                                        print("self.width: ",self.width)
                                     canvas.before:
                                         Color:
                                             rgba: light_Purple_color
@@ -220,7 +217,24 @@
                             active:True
                             color: light_Purple_color
                     # MDNavigationDrawerDivider:
-
+                    OneLineIconListItem:
+                        Myslider:
+                            id: slider2
+                            min: 0
+                            max: 100
+                            value: 25
+                            hint: False
+                            hint_text_color: "white"
+                            # hint_radius: [6, 0, 6, 0]
+                            thumb_color_active: dark_Purple_color
+                            thumb_color_inactive: dark_Purple_color
+                            # thumb_color_disabled: light_Purple_color
+                            track_color_active: light_Purple_color
+                            track_color_inactive: light_Purple_color
+                            show_off:True
+                            active:True
+                            color: light_Purple_color
+                    # MDNavigationDrawerDivider:
 
                         
 <Myslider>

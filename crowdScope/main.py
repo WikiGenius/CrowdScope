@@ -13,10 +13,13 @@ import time
 # People_count:People_count
 
 class crowdScope(StyleApp):
-    
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.imgsz = 920 
     def on_start(self): 
         # Load YOLOv8n model for object detection
-        self.detector = ASOne(detector=asone.YOLOV8N_PYTORCH, use_cuda=True)
+        # self.detector = ASOne(detector=asone.YOLOV8N_PYTORCH, use_cuda=True)
+        self.detector = ASOne(detector=asone.YOLOV8N_PYTORCH,weights=model_path ,use_cuda=True)
         self.pattern1 = re.compile(r'\d+')
         
     def on_stop(self):
@@ -45,8 +48,8 @@ class crowdScope(StyleApp):
             bbox_xyxy = dets[:, :4]
             scores = dets[:, 4]
             class_ids = dets[:, 5]
-            frame, count_people = utils.count_people(frame, bbox_xyxy, class_ids=class_ids)
-            
+            frame, count_people, faces = utils.count_people(frame, bbox_xyxy, class_ids=class_ids)
+            print(faces)
             people_count_number = self.screen.people_count.text
             modified_people_count_number = self.pattern1.sub(f"{count_people}", people_count_number)
             self.screen.people_count.text = modified_people_count_number
