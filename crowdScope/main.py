@@ -15,9 +15,8 @@ import time
 class crowdScope(StyleApp):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.imgsz = 920 
+        self.imgsz = 640
         self.visualize = True
-        self.conf_thres = 0.25
         self.iou_thres=0.45
         
     def on_start(self): 
@@ -48,7 +47,8 @@ class crowdScope(StyleApp):
             self.stop_analyse()
 
     def count_people(self, frame):
-        dets, frame_info = self.detector.detect(frame, conf_thres=self.conf_thres, iou_thres=self.iou_thres)
+        conf_thres = self.screen.conf_thres.value / 100
+        dets, frame_info = self.detector.detect(frame, conf_thres=conf_thres, iou_thres=self.iou_thres, input_shape=self.imgsz)
         frame, count_people, faces = utils.count_people(frame, dets, visualize=self.visualize )
         people_count_number = self.screen.people_count.text
         modified_people_count_number = self.pattern1.sub(f"{count_people}", people_count_number)

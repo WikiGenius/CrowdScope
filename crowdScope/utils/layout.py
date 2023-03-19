@@ -13,9 +13,9 @@ from kivy.graphics.texture import Texture
 from utils import resize, create_rounded_img
 from plyer import filechooser
 
-model_path = 'assets/weights/best_640.pt'
-# model_path = 'assets/weights/best_928.pt'
-
+# model_path = 'assets/weights/best_s_640.pt'
+# model_path = 'assets/weights/best_s_928.pt'
+model_path = 'assets/weights/best_s_640.pt'
 # importing labelbase which
 # register our custom font for application
 from kivy.core.text import LabelBase

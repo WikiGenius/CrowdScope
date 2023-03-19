@@ -15,7 +15,6 @@
     text_color: white_color
     icon_color: white_color
     selected_color: white_color
-
 <MainScreen>:
     detection_image: detection_image
     upload_video_button: upload_video_button
@@ -24,6 +23,8 @@
     gender_M:gender_M
     gender_F:gender_F
     avg_age:avg_age
+    conf_thres:conf_thres
+
     
     MDScreen:
         MDNavigationLayout:
@@ -102,7 +103,7 @@
                                     id:avg_age
                                     markup:True
                                     theme_text_color: "Custom"
-                                    text: "[font=Montserrat]25[/font]"
+                                    text: "[font=Montserrat]0[/font]"
                                     halign: 'center'
                                     color: black_color
                                     font_size:self.height * 0.8
@@ -122,7 +123,7 @@
                                     text_color: white_color
                                     font_style:"H5"
 
-                            MDBoxLayout:
+                            MDFloatLayout:
                                 orientation: 'horizontal'
                                 pos_hint: {'center_y': 0.72, 'right': 0.95}
                                 size_hint: 0.25, 0.6
@@ -135,7 +136,9 @@
                                     size_hint_x:0.5
                                     color: black_color
                                     font_size:self.height * 0.8
-                                    pos: (650, self.y)
+                                    # pos: (650, self.y)
+                                    pos_hint: {'center_y': 0.5, 'right': 1}
+
                                     # pos_hint: {'right': 0.95, 'center_y': 0.68}
                                     canvas.before:
                                         Color:
@@ -155,7 +158,9 @@
                                     color: white_color
                                     font_size:self.height * 0.8
                                     # pos: (self.x + self.width/2, self.y)
-                                    pos: (565, self.y)
+                                    # pos: (565, self.y)
+                                    pos_hint: {'center_y': 0.5, 'right': 0.57}
+
                                     # pos_hint: {'left': 0.7,'center_y': 0.68}
 
                                     canvas.before:
@@ -172,9 +177,6 @@
             MDNavigationDrawer:
                 id: nav_drawer
                 radius: (0, 16, 16, 0)
-                # md_bg_color: rail_bg_color
-                # elevation: 4
-                # shadow_radius: 16, 16, 0, 0
                 width: "240dp"
                 enable_swiping:False
                 anchor: "left"
@@ -182,10 +184,7 @@
                 MDNavigationDrawerMenu:
 
                     MDNavigationDrawerHeader:
-                        # title: "Header title"
-                        # title_color: "#4a4939"
                         text: "Settings"
-
                         spacing: "4dp"
                         padding: "12dp", 0, 0, "56dp"
                     DrawerClickableItem:
@@ -201,7 +200,7 @@
                         text: "[font=Montserrat]CONFIDENCE LEVEL[/font]"
                     OneLineIconListItem:
                         Myslider:
-                            id: slider
+                            id: conf_thres
                             min: 0
                             max: 100
                             value: 25
@@ -217,23 +216,23 @@
                             active:True
                             color: light_Purple_color
                     # MDNavigationDrawerDivider:
-                    OneLineIconListItem:
-                        Myslider:
-                            id: slider2
-                            min: 0
-                            max: 100
-                            value: 25
-                            hint: False
-                            hint_text_color: "white"
-                            # hint_radius: [6, 0, 6, 0]
-                            thumb_color_active: dark_Purple_color
-                            thumb_color_inactive: dark_Purple_color
-                            # thumb_color_disabled: light_Purple_color
-                            track_color_active: light_Purple_color
-                            track_color_inactive: light_Purple_color
-                            show_off:True
-                            active:True
-                            color: light_Purple_color
+                    # OneLineIconListItem:
+                    #     Myslider:
+                    #         id: slider2
+                    #         min: 0
+                    #         max: 100
+                    #         value: 25
+                    #         hint: False
+                    #         hint_text_color: "white"
+                    #         # hint_radius: [6, 0, 6, 0]
+                    #         thumb_color_active: dark_Purple_color
+                    #         thumb_color_inactive: dark_Purple_color
+                    #         # thumb_color_disabled: light_Purple_color
+                    #         track_color_active: light_Purple_color
+                    #         track_color_inactive: light_Purple_color
+                    #         show_off:True
+                    #         active:True
+                    #         color: light_Purple_color
                     # MDNavigationDrawerDivider:
 
                         
