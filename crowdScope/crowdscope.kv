@@ -87,13 +87,13 @@
                                             pos: self.pos
                                             size: self.size
 
-                                MDLabel:
+                                Label:
                                     markup:True
                                     theme_text_color: "Custom"
                                     text: "[font=Montserrat]People[/font]"
                                     halign: 'center'
                                     text_color: white_color
-                                    font_style:"H5"
+                                    font_size:self.height * 0.4
 
                             BoxLayout:
                                 orientation: 'vertical'
@@ -115,13 +115,13 @@
                                             pos: self.pos
                                             size: self.size
 
-                                MDLabel:
+                                Label:
                                     markup:True
                                     theme_text_color: "Custom"
                                     text: "[font=Montserrat]Avg Age[/font]"
                                     halign: 'center'
                                     text_color: white_color
-                                    font_style:"H5"
+                                    font_size:self.height * 0.4
 
                             FloatLayout:
                                 orientation: 'horizontal'
@@ -256,9 +256,9 @@
             (root.value_pos[0] - dp(9), root.center_y - hint_box_update.height / 2 - dp(30)) \
             if root.orientation == "horizontal" else \
             (root.center_x - hint_box_update.width / 2 + dp(30), root.value_pos[1] - dp(8))
-        MDLabel:
+        Label:
             id: lbl_value
-            font_style: "Caption"
+            font_size:self.height * 0.4
             halign: "center"
             theme_text_color: "Custom"
             -text_size: None, None
@@ -272,7 +272,7 @@
                 if isinstance(root.step, float) else str(int(root.value)) + "%"
 
 
-# MDLabel:
+# Label:
     # id:people_count
     # markup:True
     # theme_text_color: "Custom"
@@ -280,7 +280,7 @@
     # halign: 'center'
     # md_bg_color: white_color
     # text_color: black_color
-    # font_style:"H2"
+    # font_size:self.height * 0.4
     # canvas:
         # RoundedRectangle:
             # pos: self.pos
