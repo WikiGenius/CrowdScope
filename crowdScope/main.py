@@ -37,8 +37,8 @@ class crowdScope(StyleApp):
     
     def analyse_image(self, frame):
         process_time = time.time()
-        frame, faceBoxes = self.count_people(frame)
-        # frame = self.analyse_faces(frame, faceBoxes)
+        frame_vis, faceBoxes = self.count_people(frame.copy())
+        frame = self.analyse_faces(frame.copy(), frame_vis, faceBoxes)
         process_time = time.time() - process_time
         self.fps = 1 / process_time
         return frame
@@ -66,7 +66,7 @@ class crowdScope(StyleApp):
         
         return frame, faceBoxes
     
-    def analyse_faces(self, frame, faceBoxes):
+    def analyse_faces(self, frame, frame_vis, faceBoxes):
         total_ages = 0
         total_genderList = []
         for faceBox in faceBoxes:
@@ -79,28 +79,46 @@ class crowdScope(StyleApp):
             self.genderNet.setInput(blob)
             genderPreds=self.genderNet.forward()
             gender=genderList[genderPreds[0].argmax()]
-            total_genderList.append(gender)
-
             self.ageNet.setInput(blob)
             agePreds=self.ageNet.forward()
             age=ageList[agePreds[0].argmax()]
+            
+            total_genderList.append(gender)
             ag1, age2 = age.strip('()').split('-')
             total_ages += (int(ag1) + int(age2)) / 2
-            cv2.putText(frame, f'{gender}, {age}', (faceBox[0], faceBox[1]-10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,255), 2, cv2.LINE_AA)
+            
+            if self.visualize:
+                cv2.putText(frame_vis, f'{gender}, {age}', (faceBox[0], faceBox[1]-10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,255), 2, cv2.LINE_AA)
         
-        avg_age = int(total_ages / faceBoxes.shape[0])
-        M_count = sum([1 for x in total_genderList if x=='Male' ])
-        F_count = len(total_genderList) - M_count
-        M_ratio = M_count /  len(total_genderList)
-        F_ratio = F_count /  len(total_genderList)
-        print(f"M_ratio: {M_ratio}")
-        print(f"F_ratio: {F_ratio}")
+        if faceBox.shape[0] > 0:
+            avg_age = int(total_ages / faceBoxes.shape[0])
+            M_count = sum([1 for x in total_genderList if x=='Male' ])
+            F_count = len(total_genderList) - M_count
+            M_ratio = M_count /  len(total_genderList)
+            F_ratio = F_count /  len(total_genderList)
+        
+        else:
+            M_ratio = 0.5
+            F_ratio = 0.5
+            avg_age_number= 0
+        if M_ratio < 0.3:
+            self.screen.gender_M.text = ""
+        else:
+            self.screen.gender_M.text = "[font=Montserrat]M[/font]"
+        if F_ratio < 0.3:
+            self.screen.gender_F.text = ""
+        else:
+            self.screen.gender_F.text = "[font=Montserrat]F[/font]"
+            
+            
+        self.screen.gender_M.size_hint_x =  M_ratio
+        self.screen.gender_F.size_hint_x =  F_ratio
         
         avg_age_number = self.screen.avg_age.text
         modified_avg_age_number = self.pattern1.sub(f"{avg_age}", avg_age_number)
         self.screen.avg_age.text = modified_avg_age_number
         
-        return frame
+        return frame_vis
     
     def process_after_video(self):
         self.stop_analyse()
@@ -114,6 +132,11 @@ class crowdScope(StyleApp):
         avg_age_number = self.screen.avg_age.text
         modified_avg_age_number = self.pattern1.sub(f"{0}", avg_age_number)
         self.screen.avg_age.text = modified_avg_age_number
+        "=======================gender======================="
+        self.screen.gender_M.size_hint_x =  0.5
+        self.screen.gender_F.size_hint_x =  0.5
+        self.screen.gender_M.text = "[font=Montserrat]M[/font]"
+        self.screen.gender_F.text = "[font=Montserrat]F[/font]"
         "=======================FPS=========================="
         self.fps = 33
     
