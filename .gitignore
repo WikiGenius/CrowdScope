@@ -7,3 +7,15 @@ tests
 poetry.lock
 designs
 assets
+CrowdScope.spec
+build
+*.png
+*.jpg
+*.mp4
+generate_samples.ipynb
+generate_faces.py
+test_gender.py
+vis_faces.py
+1.txt
+2.txt
+yolov8
