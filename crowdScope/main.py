@@ -32,10 +32,10 @@ class crowdScope(StyleApp):
     def analyse_image(self, frame):
         process_time = time.time()
         frame_vis, faceBoxes = self.count_people(frame.copy())
-        frame = self.analyse_faces(frame.copy(), frame_vis, faceBoxes)
+        # frame_vis = self.analyse_faces(frame.copy(), frame_vis, faceBoxes)
         process_time = time.time() - process_time
         self.fps = 1 / process_time
-        return frame
+        return frame_vis
     
     def analyse_button(self):
         if self.start == False: 
@@ -52,7 +52,7 @@ class crowdScope(StyleApp):
     def count_people(self, frame):
         conf_thres = self.screen.conf_thres.value / 100
         dets, frame_info = self.detector.detect(frame, conf_thres=conf_thres, iou_thres=iou_thres, input_shape=imgsz)
-        frame, count_people, faceBoxes = utils.count_people(frame, dets, visualize=visualize )
+        frame, count_people, faceBoxes = utils.draw_count_people(frame, dets, visualize=visualize )
         
         people_count_number = self.screen.people_count.text
         modified_people_count_number = self.pattern1.sub(f"{count_people}", people_count_number)

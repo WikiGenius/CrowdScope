@@ -3,7 +3,7 @@
 # GitHub: https://github.com/WikiGenius
 
 from asone.utils.draw import *
-def count_people(img, dets, visualize = True, identities=None, draw_trails=False, offset=(0, 0), class_names=['face', 'person']):
+def draw_count_people(img, dets, visualize = True, identities=None, draw_trails=False, offset=(0, 0), class_names=['face', 'person'], conf_thresh_face = 0.25):
     count_people = 0
     faceBoxes = []
     if dets is not None: 
@@ -37,15 +37,16 @@ def count_people(img, dets, visualize = True, identities=None, draw_trails=False
                 obj_name = names[int(class_ids[i])]
             
             label = f'{obj_name}' if id is None else f'{id}'
-    
             if label == 'person':
                count_people += 1
                
             elif label == 'face':
-                faceBoxes.append(get_face(box, offset))
+                if scores[i] >= conf_thresh_face:
+                    faceBoxes.append(get_face(box, offset))
                 
             if visualize:
-                draw_ui_box(box, img, label=label, color=color, line_thickness=2)
+                if label == 'person' or (label == 'face' and scores[i] >= conf_thresh_face):
+                    draw_ui_box(box, img, label=label, color=color, line_thickness=2)
     
             # Draw trails        
             # code to find center of bottom edge
