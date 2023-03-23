@@ -1,12 +1,13 @@
 
 visualize = True
 iou_thres=0.45
-CONF_LEVEL_FACE = 0.25
+CONF_LEVEL_FACE = 0.7
 # model_path = 'assets/weights/best_n_640.pt'
 # model_path = 'assets/weights/best_n__928.pt'
 # model_path = 'assets/weights/best_s_640.pt'
 # model_path = 'assets/weights/bestv2_n_640.pt'
-model_path = 'assets/weights/bestv3_n_640.pt'
+# model_path = 'assets/weights/bestv3_n_640.pt'
+model_path = 'assets/weights/bestv4_n_640.pt'
 
 
 imgsz = int(model_path.split('.')[0].split('_')[-1])
