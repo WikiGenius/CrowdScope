@@ -1,6 +1,4 @@
 
-visualize = True
-
 # model_path = 'assets/weights/best_n_640.pt'
 # model_path = 'assets/weights/best_n__928.pt'
 # model_path = 'assets/weights/best_s_640.pt'

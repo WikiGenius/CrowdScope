@@ -16,6 +16,7 @@ class crowdScope(StyleApp):
 
     def on_start(self): 
         # Load YOLOv8n model for object detection
+        self.visualize = False
         print(f"load model: {model_path}")
         print(f"image size: {imgsz }")
         self.detector = ASOne(detector=asone.YOLOV8N_PYTORCH,weights=model_path ,use_cuda=True)
@@ -37,6 +38,8 @@ class crowdScope(StyleApp):
         self.fps = 1 / process_time
         return frame_vis
     
+    def check_box_visualization(self, active):
+        self.visualize = active
     def analyse_button(self):
         if self.start == False: 
             self.start = True
@@ -54,7 +57,7 @@ class crowdScope(StyleApp):
         iou_thres = self.screen.iou_thres.value / 100
         face_thres = self.screen.face_thres.value / 100
         dets, frame_info = self.detector.detect(frame, conf_thres=conf_thres, iou_thres=iou_thres, input_shape=imgsz)
-        frame, count_people, faceBoxes = utils.draw_count_people(frame, dets, visualize=visualize, conf_thresh_face=face_thres )
+        frame, count_people, faceBoxes = utils.draw_count_people(frame, dets, visualize=self.visualize, conf_thresh_face=face_thres )
         
         people_count_number = self.screen.people_count.text
         modified_people_count_number = self.pattern1.sub(f"{count_people}", people_count_number)
@@ -83,7 +86,7 @@ class crowdScope(StyleApp):
             ag1, age2 = age.strip('()').split('-')
             total_ages += (int(ag1) + int(age2)) / 2
             
-            if visualize:
+            if self.visualize:
                 cv2.putText(frame_vis, f'{gender}, {age}', (faceBox[0], faceBox[1]-10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,255), 2, cv2.LINE_AA)
         
         if faceBoxes.shape[0] > 0:
