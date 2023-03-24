@@ -1,3 +1,5 @@
+import cv2
+import asone
 
 # model_path = 'assets/weights/best_n_640.pt'
 # model_path = 'assets/weights/best_n__928.pt'
@@ -7,11 +9,7 @@
 model_path = 'assets/weights/bestv4_n_640.pt'
 # model_path = 'assets/weights/bestv5_n_640.pt'
 
-imgsz = int(model_path.split('.')[0].split('_')[-1])
-
-# preprocess face
-PADDING=0.1
-FIX_SQUARE=True
+detector = asone.ASOne(detector=asone.YOLOV8N_PYTORCH,weights=model_path ,use_cuda=True)
 
 
 ageProto="assets/weights/age_deploy.prototxt"
@@ -19,6 +17,17 @@ ageModel="assets/weights/age_net.caffemodel"
 
 genderProto="assets/weights/gender_deploy.prototxt"
 genderModel="assets/weights/gender_net.caffemodel"
+
+ageNet=cv2.dnn.readNet(ageModel,ageProto)
+genderNet=cv2.dnn.readNet(genderModel,genderProto)
+
+imgsz = int(model_path.split('.')[0].split('_')[-1])
+
+# preprocess face
+PADDING=0.1
+FIX_SQUARE=True
+
+
 
 gender_model_path = 'assets/weights/best_cls_gender.pt'
 

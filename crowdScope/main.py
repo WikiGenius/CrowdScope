@@ -5,8 +5,6 @@
 from utils.layout import *
 from conf import *
 from utils import StyleApp
-import asone
-from asone import ASOne
 import utils
 import re
 import time
@@ -18,11 +16,7 @@ class crowdScope(StyleApp):
         # Load YOLOv8n model for object detection
         print(f"load model: {model_path}")
         print(f"image size: {imgsz }")
-        self.detector = ASOne(detector=asone.YOLOV8N_PYTORCH,weights=model_path ,use_cuda=True)
 
-        self.ageNet=cv2.dnn.readNet(ageModel,ageProto)
-        self.genderNet=cv2.dnn.readNet(genderModel,genderProto)
-        
         self.pattern1 = re.compile(r'\d+')
         
     def on_stop(self):
@@ -56,7 +50,7 @@ class crowdScope(StyleApp):
         conf_thres = self.screen.conf_thres.value / 100
         iou_thres = self.screen.iou_thres.value / 100
         face_thres = self.screen.face_thres.value / 100
-        dets, frame_info = self.detector.detect(frame, conf_thres=conf_thres, iou_thres=iou_thres, input_shape=imgsz)
+        dets, frame_info = detector.detect(frame, conf_thres=conf_thres, iou_thres=iou_thres, input_shape=imgsz)
         frame, count_people, faceBoxes = utils.draw_count_people(frame, dets, visualize=self.visualize, conf_thresh_face=face_thres )
         
         people_count_number = self.screen.people_count.text
@@ -71,14 +65,7 @@ class crowdScope(StyleApp):
         for faceBox in faceBoxes:
             face = utils.preprocess_face(frame, faceBox)
 
-            
-            blob=cv2.dnn.blobFromImage(face, 1.0, (227,227), MODEL_MEAN_VALUES, swapRB=False)
-            self.genderNet.setInput(blob)
-            genderPreds=self.genderNet.forward()
-            gender=genderList[genderPreds[0].argmax()]
-            self.ageNet.setInput(blob)
-            agePreds=self.ageNet.forward()
-            age=ageList[agePreds[0].argmax()]
+            gender, age=utils.predict_age_gender(face)
             
             total_genderList.append(gender)
             ag1, age2 = age.strip('()').split('-')
