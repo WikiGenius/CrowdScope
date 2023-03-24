@@ -1,10 +1,14 @@
 from conf import *
-
-def predict_gender(blob):
-
-    genderNet.setInput(blob)
-    genderPreds=genderNet.forward()
-    gender=genderList[genderPreds[0].argmax()]
+import torch
+def predict_gender(face):
+    results = gender_model.predict(face)[0]
+    probs = results.probs
+    idx = torch.argmax(probs).item()
+    print("========FACE=======")
+    print(probs)
+    print(idx)
+    print("===============")
+    gender = GENDER_DICT[idx]
     return gender
 
 def predict_age(blob):
@@ -17,8 +21,7 @@ def predict_age(blob):
 
 
 def predict_age_gender(face):
-    blob=cv2.dnn.blobFromImage(face, 1.0, (227,227), MODEL_MEAN_VALUES, swapRB=False)
-    gender = predict_gender(blob)
-    age = predict_age(blob)
-    
+    gender = predict_gender(face)
+    # age = predict_age(blob)
+    age = 0
     return gender, age

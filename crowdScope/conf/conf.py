@@ -1,5 +1,6 @@
 import cv2
 import asone
+from ultralytics import YOLO
 
 # model_path = 'assets/weights/best_n_640.pt'
 # model_path = 'assets/weights/best_n__928.pt'
@@ -30,12 +31,13 @@ FIX_SQUARE=True
 
 
 gender_model_path = 'assets/weights/best_cls_gender.pt'
+gender_model = YOLO(gender_model_path)  # load a pretrained YOLOv8n classification model
 
 MODEL_MEAN_VALUES=(78.4263377603, 87.7689143744, 114.895847746)
 ageList=['(0-2)', '(4-6)', '(8-12)', '(15-20)', '(25-32)', '(38-43)', '(48-53)', '(60-100)']
 genderList=['Male','Female']
 
-genderdict={0: 'F', 1: 'M'}
+GENDER_DICT={0: 'F', 1: 'M'}
 
 
 

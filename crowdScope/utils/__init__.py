@@ -7,7 +7,7 @@ from utils.preprocess import preprocess, resize
 from utils.render import create_rounded_img
 from utils.style_app import StyleApp
 from utils.preprocess_face import preprocess_face
-from utils.age_gender import predict_age, predict_gender, predict_age_gender
+from utils.age_gender import predict_age_gender
 import random
 random.seed(0)
 

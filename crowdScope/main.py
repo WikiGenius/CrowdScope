@@ -68,14 +68,16 @@ class crowdScope(StyleApp):
             gender, age=utils.predict_age_gender(face)
             
             total_genderList.append(gender)
-            ag1, age2 = age.strip('()').split('-')
-            total_ages += (int(ag1) + int(age2)) / 2
+            
+            # ag1, age2 = age.strip('()').split('-')
+            # total_ages += (int(ag1) + int(age2)) / 2
             
             if self.visualize:
                 cv2.putText(frame_vis, f'{gender}, {age}', (faceBox[0], faceBox[1]-10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,255), 2, cv2.LINE_AA)
         
         if faceBoxes.shape[0] > 0:
-            avg_age = int(total_ages / faceBoxes.shape[0])
+            # avg_age = int(total_ages / faceBoxes.shape[0])
+            avg_age = 0
             M_count = sum([1 for x in total_genderList if x=='Male' ])
             F_count = len(total_genderList) - M_count
             M_ratio = M_count /  len(total_genderList)
