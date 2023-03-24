@@ -51,8 +51,10 @@ class crowdScope(StyleApp):
 
     def count_people(self, frame):
         conf_thres = self.screen.conf_thres.value / 100
+        iou_thres = self.screen.iou_thres.value / 100
+        face_thres = self.screen.face_thres.value / 100
         dets, frame_info = self.detector.detect(frame, conf_thres=conf_thres, iou_thres=iou_thres, input_shape=imgsz)
-        frame, count_people, faceBoxes = utils.draw_count_people(frame, dets, visualize=visualize, conf_thresh_face=CONF_LEVEL_FACE )
+        frame, count_people, faceBoxes = utils.draw_count_people(frame, dets, visualize=visualize, conf_thresh_face=face_thres )
         
         people_count_number = self.screen.people_count.text
         modified_people_count_number = self.pattern1.sub(f"{count_people}", people_count_number)

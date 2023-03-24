@@ -1,18 +1,19 @@
 
 visualize = True
-iou_thres=0.45
-CONF_LEVEL_FACE = 0.7
+
 # model_path = 'assets/weights/best_n_640.pt'
 # model_path = 'assets/weights/best_n__928.pt'
 # model_path = 'assets/weights/best_s_640.pt'
 # model_path = 'assets/weights/bestv2_n_640.pt'
 # model_path = 'assets/weights/bestv3_n_640.pt'
-model_path = 'assets/weights/bestv4_n_640.pt'
-
+# model_path = 'assets/weights/bestv4_n_640.pt'
+model_path = 'assets/weights/bestv5_n_640.pt'
 
 imgsz = int(model_path.split('.')[0].split('_')[-1])
 
-
+# preprocess face
+PADDING=0.1
+FIX_SQUARE=True
 
 
 ageProto="assets/weights/age_deploy.prototxt"
@@ -28,6 +29,6 @@ ageList=['(0-2)', '(4-6)', '(8-12)', '(15-20)', '(25-32)', '(38-43)', '(48-53)',
 # genderList=['Male','Female']
 
 genderdict={0: 'F', 1: 'M'}
-# padding=5
-padding=0
+
+
 
