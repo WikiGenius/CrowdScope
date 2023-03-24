@@ -78,11 +78,17 @@ class crowdScope(StyleApp):
         if faceBoxes.shape[0] > 0:
             # avg_age = int(total_ages / faceBoxes.shape[0])
             avg_age = 0
-            M_count = sum([1 for x in total_genderList if x=='Male' ])
-            F_count = len(total_genderList) - M_count
+            M_count = sum([1 for x in total_genderList if x=='M' ])
             M_ratio = M_count /  len(total_genderList)
-            F_ratio = F_count /  len(total_genderList)
-        
+
+            if M_ratio == 0:
+                M_ratio += EPS_SIZE
+                
+            elif M_ratio == 1:
+                M_ratio -= EPS_SIZE
+                
+            F_ratio = 1 - M_ratio
+            
         else:
             M_ratio = 0.5
             F_ratio = 0.5
@@ -95,8 +101,10 @@ class crowdScope(StyleApp):
             self.screen.gender_F.text = ""
         else:
             self.screen.gender_F.text = "[font=Montserrat]F[/font]"
-            
-            
+        
+        print(f"M_ratio: {M_ratio}  -  F_ratio: {F_ratio} - {1 - M_ratio == F_ratio}")
+        
+        
         self.screen.gender_M.size_hint_x =  M_ratio
         self.screen.gender_F.size_hint_x =  F_ratio
         

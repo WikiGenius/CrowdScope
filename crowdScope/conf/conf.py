@@ -27,7 +27,7 @@ imgsz = int(model_path.split('.')[0].split('_')[-1])
 # preprocess face
 PADDING=0.1
 FIX_SQUARE=True
-
+EPS_SIZE = 0.05
 
 
 gender_model_path = 'assets/weights/best_cls_gender.pt'
