@@ -16,7 +16,6 @@ class crowdScope(StyleApp):
 
     def on_start(self): 
         # Load YOLOv8n model for object detection
-        self.visualize = False
         print(f"load model: {model_path}")
         print(f"image size: {imgsz }")
         self.detector = ASOne(detector=asone.YOLOV8N_PYTORCH,weights=model_path ,use_cuda=True)
@@ -31,6 +30,8 @@ class crowdScope(StyleApp):
         pass  
     
     def analyse_image(self, frame):
+        self.visualize = self.screen.vis.active
+
         process_time = time.time()
         frame_vis, faceBoxes = self.count_people(frame.copy())
         # frame_vis = self.analyse_faces(frame.copy(), frame_vis, faceBoxes)
@@ -38,8 +39,7 @@ class crowdScope(StyleApp):
         self.fps = 1 / process_time
         return frame_vis
     
-    def check_box_visualization(self, active):
-        self.visualize = active
+        
     def analyse_button(self):
         if self.start == False: 
             self.start = True
@@ -69,9 +69,7 @@ class crowdScope(StyleApp):
         total_ages = 0
         total_genderList = []
         for faceBox in faceBoxes:
-            face=frame[max(0,faceBox[1]-padding):
-                       min(faceBox[3]+padding,frame.shape[0]-1),max(0,faceBox[0]-padding)
-                       :min(faceBox[2]+padding, frame.shape[1]-1)]
+            face = utils.preprocess_face(frame, faceBox)
 
             
             blob=cv2.dnn.blobFromImage(face, 1.0, (227,227), MODEL_MEAN_VALUES, swapRB=False)
