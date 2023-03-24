@@ -34,7 +34,7 @@ class crowdScope(StyleApp):
 
         process_time = time.time()
         frame_vis, faceBoxes = self.count_people(frame.copy())
-        # frame_vis = self.analyse_faces(frame.copy(), frame_vis, faceBoxes)
+        frame_vis = self.analyse_faces(frame.copy(), frame_vis, faceBoxes)
         process_time = time.time() - process_time
         self.fps = 1 / process_time
         return frame_vis
