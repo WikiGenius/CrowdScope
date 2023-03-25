@@ -6,6 +6,7 @@ from asone.utils.draw import *
 def draw_count_people(img, dets, visualize = True, identities=None, draw_trails=False, offset=(0, 0), class_names=['face', 'person'], conf_thresh_face = 0.25):
     count_people = 0
     faceBoxes = []
+    faceScores = []
     if dets is not None: 
         bbox_xyxy = dets[:, :4]
         scores = dets[:, 4]
@@ -43,6 +44,7 @@ def draw_count_people(img, dets, visualize = True, identities=None, draw_trails=
             elif label == 'face':
                 if scores[i] >= conf_thresh_face:
                     faceBoxes.append(get_face(box, offset))
+                    faceScores.append(scores[i])
                 
             if visualize:
                 if label == 'person' or (label == 'face' and scores[i] >= conf_thresh_face):
@@ -61,7 +63,8 @@ def draw_count_people(img, dets, visualize = True, identities=None, draw_trails=
                 drawtrails(data_deque, id, color, img)
                 
     faceBoxes = np.array(faceBoxes)
-    return img, count_people, faceBoxes 
+    faceScores = np.array(faceScores)
+    return img, count_people, faceBoxes, faceScores 
 
 
 def get_face(box, offset):
@@ -71,3 +74,47 @@ def get_face(box, offset):
     y1 += offset[1]
     y2 += offset[1]
     return [x1, y1, x2, y2]
+
+
+
+def draw_analyse_faces(screen, pattern, frame_vis, gender, age, faceBoxes, faceBox, visualize, total_genderList, total_ages, eps_size = 0.05):
+    if visualize:
+        cv2.putText(frame_vis, f'{gender}, {age}', (faceBox[0], faceBox[1]-10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,255), 2, cv2.LINE_AA)
+    
+    if faceBoxes.shape[0] > 0:
+        # avg_age = int(total_ages / faceBoxes.shape[0])
+        avg_age = 0
+        M_count = sum([1 for x in total_genderList if x=='M' ])
+        M_ratio = M_count /  len(total_genderList)
+        if M_ratio == 0:
+            M_ratio += eps_size
+            
+        elif M_ratio == 1:
+            M_ratio -= eps_size
+            
+        F_ratio = 1 - M_ratio
+        
+    else:
+        M_ratio = 0.5
+        F_ratio = 0.5
+        avg_age= 0
+    if M_ratio < 0.3:
+        screen.gender_M.text = ""
+    else:
+        screen.gender_M.text = "[font=Montserrat]M[/font]"
+    if F_ratio < 0.3:
+        screen.gender_F.text = ""
+    else:
+        screen.gender_F.text = "[font=Montserrat]F[/font]"
+    
+    print(f"M_ratio: {M_ratio}  -  F_ratio: {F_ratio} - {1 - M_ratio == F_ratio}")
+    
+    
+    screen.gender_M.size_hint_x =  M_ratio
+    screen.gender_F.size_hint_x =  F_ratio
+    
+    avg_age_number = screen.avg_age.text
+    modified_avg_age_number = pattern.sub(f"{avg_age}", avg_age_number)
+    screen.avg_age.text = modified_avg_age_number
+    
+    return frame_vis
