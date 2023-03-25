@@ -1,5 +1,6 @@
 from conf import *
 import utils
+import numpy as np
 
 class Process:
     def __init__(self, screen, pattern):
@@ -13,14 +14,14 @@ class Process:
          face_thres = self.screen.face_thres.value / 100
          dets, frame_info = detector.detect(frame, conf_thres=conf_thres, iou_thres=iou_thres, input_shape=imgsz)
          frame, count_people, faceBoxes, faceScores = utils.draw_count_people(frame, dets, visualize=self.visualize, conf_thresh_face=face_thres )
-         print(faceScores.shape)
-         print(faceScores)
-         print('=====================')
+
+         selected_faceBoxes, selected_faceScores = self.get_top_k_face(faceBoxes, faceScores, k = 2)
+
          people_count_number = self.screen.people_count.text
          modified_people_count_number = self.pattern.sub(f"{count_people}", people_count_number)
          self.screen.people_count.text = modified_people_count_number
 
-         return frame, faceBoxes
+         return frame, selected_faceBoxes
 
     def analyse_faces(self, frame, frame_vis, faceBoxes):
         total_ages = 0
@@ -38,3 +39,8 @@ class Process:
         
         return frame_vis
     
+    def get_top_k_face(self, faceBoxes, faceScores, k = 5):
+        indeces = np.argsort(faceScores)[-k:]
+        selected_faceBoxes = faceBoxes[indeces]
+        selected_faceScores = faceScores[indeces]
+        return selected_faceBoxes, selected_faceScores
