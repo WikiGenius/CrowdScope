@@ -6,7 +6,6 @@ tests
 .venv
 poetry.lock
 designs
-assets
 CrowdScope.spec
 build
 *.png
@@ -20,3 +19,4 @@ vis_faces.py
 2.txt
 yolov8
 dist/
+images_dataset
