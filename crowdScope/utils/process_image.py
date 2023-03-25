@@ -19,7 +19,7 @@ class Process:
          dets, frame_info = detector.detect(frame, conf_thres=conf_thres, iou_thres=iou_thres, input_shape=imgsz)
          frame, count_people, faceBoxes, faceScores = utils.draw_count_people(frame, dets, visualize=self.visualize, conf_thresh_face=face_thres )
 
-         selected_faceBoxes, selected_faceScores = self.get_top_k_face(faceBoxes, faceScores, k = 2)
+         selected_faceBoxes, selected_faceScores = self.get_top_k_face(faceBoxes, faceScores, k = TOP_K_FACES)
 
          people_count_number = self.screen.people_count.text
          modified_people_count_number = self.pattern.sub(f"{count_people}", people_count_number)

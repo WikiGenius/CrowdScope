@@ -14,7 +14,7 @@ imgsz = int(model_path.split('.')[0].split('_')[-1])
 PADDING=0.1
 FIX_SQUARE=True
 EPS_SIZE = 0.05
-
+TOP_K_FACES = 5
 
 gender_model_path = 'assets/weights/best_cls_gender.pt'
 gender_model = YOLO(gender_model_path)  # load a pretrained YOLOv8n gender classification model
