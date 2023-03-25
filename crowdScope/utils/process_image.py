@@ -33,8 +33,9 @@ class Process:
             
             total_genderList.append(gender)
             
-            # ag1, age2 = age.strip('()').split('-')
-            # total_ages += (int(ag1) + int(age2)) / 2
+            ag1, age2 = age.strip('()').split('-')
+            total_ages += (int(ag1) + int(age2)) / 2
+            
             frame_vis = utils.draw_analyse_faces(self.screen, self.pattern, frame_vis, gender, age, faceBoxes, faceBox, self.visualize, total_genderList, total_ages, eps_size= EPS_SIZE)
         
         return frame_vis

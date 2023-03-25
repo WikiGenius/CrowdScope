@@ -82,8 +82,7 @@ def draw_analyse_faces(screen, pattern, frame_vis, gender, age, faceBoxes, faceB
         cv2.putText(frame_vis, f'{gender}, {age}', (faceBox[0], faceBox[1]-10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,255), 2, cv2.LINE_AA)
     
     if faceBoxes.shape[0] > 0:
-        # avg_age = int(total_ages / faceBoxes.shape[0])
-        avg_age = 0
+        avg_age = int(total_ages / faceBoxes.shape[0])
         M_count = sum([1 for x in total_genderList if x=='M' ])
         M_ratio = M_count /  len(total_genderList)
         if M_ratio == 0:
