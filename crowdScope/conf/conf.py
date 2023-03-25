@@ -7,14 +7,7 @@ import asone
 from ultralytics import YOLO
 
 model_path = 'assets/weights/bestv4_n_640.pt'
-
 detector = asone.ASOne(detector=asone.YOLOV8N_PYTORCH, weights=model_path ,use_cuda=True)
-
-ageProto="assets/weights/age_deploy.prototxt"
-ageModel="assets/weights/age_net.caffemodel"
-
-ageNet=cv2.dnn.readNet(ageModel,ageProto)
-
 imgsz = int(model_path.split('.')[0].split('_')[-1])
 
 # preprocess face
