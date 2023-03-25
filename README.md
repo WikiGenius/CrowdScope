@@ -11,3 +11,16 @@ Select the video file you want to analyze.
 Click on the "Analyze" button to start the analysis process.
 View the results in the app window.
 
+
+## Screenshots
+
+<img src="./crowdScope/assets/images/11.png" alt="Desktop screenshot" width="500">
+<img src="./crowdScope/assets/images/22.png" alt="Desktop screenshot" width="500">
+
+
+<img src="./crowdScope/assets/images/33.png" alt="Desktop screenshot" width="500">
+<img src="./crowdScope/assets/images/44.png" alt="Desktop screenshot" width="500">
+
+## Author
+- Muhammed Elyamani
+- GitHub: https://github.com/WikiGenius
