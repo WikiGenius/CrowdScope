@@ -78,9 +78,12 @@ def get_face(box, offset):
 
 
 def draw_analyse_faces(screen, pattern, frame_vis, gender, age, faceBoxes, faceBox, visualize, total_genderList, total_ages, eps_size = 0.05):
+    color = compute_color_for_labels(5)
     if visualize:
-        cv2.putText(frame_vis, f'{gender}, {age}', (faceBox[0], faceBox[1]-10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,255), 2, cv2.LINE_AA)
-    
+        tl = round(0.002 * (frame_vis.shape[0] + frame_vis.shape[1]) / 2) + 1  # line/font thickness
+        tf = max(tl - 1, 1)  # font thickness
+        cv2.putText(frame_vis,  f'{gender}, {age}', (faceBox[0], faceBox[1] - 5), 0, tl / 3,
+                    [225, 255, 255], thickness=tf, lineType=cv2.LINE_AA)
     if faceBoxes.shape[0] > 0:
         avg_age = int(total_ages / faceBoxes.shape[0])
         M_count = sum([1 for x in total_genderList if x=='M' ])
@@ -105,8 +108,6 @@ def draw_analyse_faces(screen, pattern, frame_vis, gender, age, faceBoxes, faceB
         screen.gender_F.text = ""
     else:
         screen.gender_F.text = "[font=Montserrat]F[/font]"
-    
-    print(f"M_ratio: {M_ratio}  -  F_ratio: {F_ratio} - {1 - M_ratio == F_ratio}")
     
     
     screen.gender_M.size_hint_x =  M_ratio

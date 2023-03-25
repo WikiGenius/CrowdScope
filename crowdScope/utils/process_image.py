@@ -1,3 +1,7 @@
+# Author: Muhammed Elyamani
+# Date: 03/02/2023
+# GitHub: https://github.com/WikiGenius
+
 from conf import *
 import utils
 import numpy as np
