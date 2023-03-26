@@ -8,11 +8,8 @@ poetry.lock
 designs
 CrowdScope.spec
 build
-# *.png
-# *.jpg
 *.mp4
 generate_samples.ipynb
-generate_faces.py
 test_gender.py
 vis_faces.py
 1.txt
